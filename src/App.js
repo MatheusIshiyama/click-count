@@ -21,7 +21,6 @@ export default function App() {
 
   function select() {
     axios
-      .create({ baseURL: "http://localhost:3101" })
       .get("/select")
       .then((response) => {
         if (response.data.error) alert(response.data.error);
@@ -32,7 +31,6 @@ export default function App() {
 
   function handleClick(nro) {
     axios
-      .create({ baseURL: "http://localhost:3101" })
       .get(`/insert/${nro}`)
       .then((response) => {
         if (response.data.error) alert(response.data.error);
