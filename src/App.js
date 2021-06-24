@@ -1,12 +1,24 @@
 import React, { useEffect, useState } from "react";
+import { Button, Box } from "@material-ui/core";
 import axios from "axios";
 
+import "./app.css";
+
 export default function App() {
-  const [registros, setRegistros] = useState([]);
+  const [registros, setRegistros] = useState([
+  ]);
+  const [clicked, setClicked] = useState(false);
 
   useEffect(() => {
     select();
   }, []);
+
+  useEffect(() => {
+    if (!clicked) return;
+
+    select();
+    setClicked(false);
+  }, [clicked]);
 
   function select() {
     axios
@@ -18,11 +30,30 @@ export default function App() {
       .catch((error) => alert(error.message));
   }
 
+  function handleClick(nro) {
+    axios
+      .post(`/insert/${nro}`)
+      .then((response) => {
+        if (response.data.error) alert(response.data.error);
+        else setRegistros(response.data.rows);
+      })
+      .catch((error) => alert(error.message));
+
+    setClicked(true);
+  }
+
   const lista = registros.map((registro) => (
-    <div>
-      {registro.nro}: {registro.quant}
-    </div>
+    <Box mx={1}>
+      <Button
+        size="large"
+        variant="contained"
+        color="primary"
+        onClick={() => handleClick(registro.nro)}
+      >
+        {registro.nro}: {registro.quant}
+      </Button>
+    </Box>
   ));
 
-  return <div className="App"> {lista} </div>;
+  return <div className="bar">{lista}</div>;
 }
