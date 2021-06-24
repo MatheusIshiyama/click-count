@@ -5,8 +5,7 @@ import axios from "axios";
 import "./app.css";
 
 export default function App() {
-  const [registros, setRegistros] = useState([
-  ]);
+  const [registros, setRegistros] = useState([]);
   const [clicked, setClicked] = useState(false);
 
   useEffect(() => {
@@ -22,6 +21,7 @@ export default function App() {
 
   function select() {
     axios
+      .create({ baseURL: "http://localhost:3101" })
       .get("/select")
       .then((response) => {
         if (response.data.error) alert(response.data.error);
@@ -32,17 +32,17 @@ export default function App() {
 
   function handleClick(nro) {
     axios
-      .post(`/insert/${nro}`)
+      .create({ baseURL: "http://localhost:3101" })
+      .get(`/insert/${nro}`)
       .then((response) => {
         if (response.data.error) alert(response.data.error);
         else setClicked(true);
       })
       .catch((error) => alert(error.message));
-
   }
 
   const lista = registros.map((registro) => (
-    <Box mx={1}>
+    <Box mx={1} key={registro.nro}>
       <Button
         size="large"
         variant="contained"
