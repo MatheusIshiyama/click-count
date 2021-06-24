@@ -1,11 +1,12 @@
 const express = require("express");
 const app = express();
 const path = require("path");
+const cors = require('cors');
 require("dotenv").config();
 
 // para conversão de application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
-
+app.use(cors());
 const { insert, select } = require("./sql");
 
 //usar a variável de ambiente PORT
