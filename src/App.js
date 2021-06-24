@@ -35,11 +35,10 @@ export default function App() {
       .post(`/insert/${nro}`)
       .then((response) => {
         if (response.data.error) alert(response.data.error);
-        else setRegistros(response.data.rows);
+        else setClicked(true);
       })
       .catch((error) => alert(error.message));
 
-    setClicked(true);
   }
 
   const lista = registros.map((registro) => (
